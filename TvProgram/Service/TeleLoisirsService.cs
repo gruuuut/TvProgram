@@ -46,8 +46,6 @@ namespace TvProgram.Service
 
 			while (posDebut < tailleCodeSource - 100 && !string.IsNullOrEmpty(anchor) || result.Count == 0)
 			{
-				//url = GetNextUrl(codeSourceComplet, ref posFinFilmPrecedent);
-
 				anchor = GetNextAnchor(codeSourceComplet, ref posFinFilmPrecedent);
 
 				if (CheckAnchor(anchor))

@@ -37,14 +37,16 @@
             this.columnHeaderNoteTL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblResultatRecherche = new System.Windows.Forms.Label();
             this.lblChargement = new System.Windows.Forms.Label();
+            this.btnParcourir = new System.Windows.Forms.Button();
+            this.lblProgression = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnRechercher
             // 
-            this.btnRechercher.Location = new System.Drawing.Point(2079, 7);
-            this.btnRechercher.Margin = new System.Windows.Forms.Padding(7);
+            this.btnRechercher.Location = new System.Drawing.Point(895, 4);
+            this.btnRechercher.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRechercher.Name = "btnRechercher";
-            this.btnRechercher.Size = new System.Drawing.Size(243, 58);
+            this.btnRechercher.Size = new System.Drawing.Size(139, 32);
             this.btnRechercher.TabIndex = 0;
             this.btnRechercher.Text = "Rechercher";
             this.btnRechercher.UseVisualStyleBackColor = true;
@@ -52,20 +54,20 @@
             // 
             // dateTimePicker
             // 
-            this.dateTimePicker.Location = new System.Drawing.Point(28, 7);
-            this.dateTimePicker.Margin = new System.Windows.Forms.Padding(7);
+            this.dateTimePicker.Location = new System.Drawing.Point(16, 4);
+            this.dateTimePicker.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.RightToLeftLayout = true;
-            this.dateTimePicker.Size = new System.Drawing.Size(375, 35);
+            this.dateTimePicker.Size = new System.Drawing.Size(216, 22);
             this.dateTimePicker.TabIndex = 1;
             // 
             // tbSource
             // 
-            this.tbSource.Location = new System.Drawing.Point(28, 78);
-            this.tbSource.Margin = new System.Windows.Forms.Padding(7);
+            this.tbSource.Location = new System.Drawing.Point(16, 43);
+            this.tbSource.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbSource.Multiline = true;
             this.tbSource.Name = "tbSource";
-            this.tbSource.Size = new System.Drawing.Size(2288, 187);
+            this.tbSource.Size = new System.Drawing.Size(1017, 105);
             this.tbSource.TabIndex = 2;
             // 
             // lvResutat
@@ -75,10 +77,10 @@
             this.columnHeaderUrl,
             this.columnHeaderNoteTL});
             this.lvResutat.HideSelection = false;
-            this.lvResutat.Location = new System.Drawing.Point(28, 310);
-            this.lvResutat.Margin = new System.Windows.Forms.Padding(7);
+            this.lvResutat.Location = new System.Drawing.Point(16, 190);
+            this.lvResutat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lvResutat.Name = "lvResutat";
-            this.lvResutat.Size = new System.Drawing.Size(2288, 932);
+            this.lvResutat.Size = new System.Drawing.Size(1017, 497);
             this.lvResutat.TabIndex = 3;
             this.lvResutat.UseCompatibleStateImageBehavior = false;
             this.lvResutat.View = System.Windows.Forms.View.Details;
@@ -101,32 +103,53 @@
             // lblResultatRecherche
             // 
             this.lblResultatRecherche.AutoSize = true;
-            this.lblResultatRecherche.Location = new System.Drawing.Point(1038, 20);
-            this.lblResultatRecherche.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lblResultatRecherche.Location = new System.Drawing.Point(593, 11);
+            this.lblResultatRecherche.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResultatRecherche.Name = "lblResultatRecherche";
-            this.lblResultatRecherche.Size = new System.Drawing.Size(0, 29);
+            this.lblResultatRecherche.Size = new System.Drawing.Size(0, 16);
             this.lblResultatRecherche.TabIndex = 4;
             // 
             // lblChargement
             // 
             this.lblChargement.AutoSize = true;
-            this.lblChargement.Location = new System.Drawing.Point(959, 569);
+            this.lblChargement.Location = new System.Drawing.Point(548, 314);
             this.lblChargement.Name = "lblChargement";
-            this.lblChargement.Size = new System.Drawing.Size(0, 29);
+            this.lblChargement.Size = new System.Drawing.Size(0, 16);
             this.lblChargement.TabIndex = 5;
+            // 
+            // btnParcourir
+            // 
+            this.btnParcourir.Location = new System.Drawing.Point(777, 4);
+            this.btnParcourir.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnParcourir.Name = "btnParcourir";
+            this.btnParcourir.Size = new System.Drawing.Size(95, 32);
+            this.btnParcourir.TabIndex = 6;
+            this.btnParcourir.Text = "Parcourir...";
+            this.btnParcourir.UseVisualStyleBackColor = true;
+            this.btnParcourir.Click += new System.EventHandler(this.btnParcourir_Click);
+            // 
+            // lblProgression
+            // 
+            this.lblProgression.AutoSize = true;
+            this.lblProgression.Location = new System.Drawing.Point(288, 161);
+            this.lblProgression.Name = "lblProgression";
+            this.lblProgression.Size = new System.Drawing.Size(0, 16);
+            this.lblProgression.TabIndex = 7;
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2350, 1274);
+            this.ClientSize = new System.Drawing.Size(1049, 647);
+            this.Controls.Add(this.lblProgression);
+            this.Controls.Add(this.btnParcourir);
             this.Controls.Add(this.lblChargement);
             this.Controls.Add(this.lblResultatRecherche);
             this.Controls.Add(this.lvResutat);
             this.Controls.Add(this.tbSource);
             this.Controls.Add(this.dateTimePicker);
             this.Controls.Add(this.btnRechercher);
-            this.Margin = new System.Windows.Forms.Padding(7);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmMain";
             this.Text = "Fenêtre principale";
             this.ResumeLayout(false);
@@ -151,6 +174,8 @@
         }
 
         private System.Windows.Forms.Label lblChargement;
+        private System.Windows.Forms.Button btnParcourir;
+        private System.Windows.Forms.Label lblProgression;
     }
 }
 
