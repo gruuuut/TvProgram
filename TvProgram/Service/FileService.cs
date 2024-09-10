@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using TvProgram.Entities;
 using TvProgram.Utils;
+using static System.Windows.Forms.LinkLabel;
 
 namespace TvProgram.Service
 {
@@ -21,10 +22,10 @@ namespace TvProgram.Service
             StreamReader sr = new StreamReader(path);
             var line = sr.ReadLine();
             var favori = new Favori();
-            favori.UrlFavori = GetUrl(line);
+            favori.UrlFavori = GetFieldValue(line, "HREF");
             favori.DateAjoutFavori = GetDate(line);
             favori.LibelleFavori = GetLibelle(line);
-            if (!string.IsNullOrEmpty(favori.UrlFavori))
+            if (!string.IsNullOrEmpty(favori.UrlFavori) && favori.UrlFavori.Contains("https://www.programme-tv.net/cinema/"))
             {
                 result.Add(favori);
             }            
@@ -34,10 +35,10 @@ namespace TvProgram.Service
                 line = sr.ReadLine();
 
                 favori = new Favori();
-                favori.UrlFavori = GetUrl(line);
+                favori.UrlFavori = GetFieldValue(line, "HREF");
                 favori.DateAjoutFavori = GetDate(line);
                 favori.LibelleFavori = GetLibelle(line);
-                if (!string.IsNullOrEmpty(favori.UrlFavori))
+                if (!string.IsNullOrEmpty(favori.UrlFavori) && favori.UrlFavori.Contains("https://www.programme-tv.net/cinema/"))
                 {
                     result.Add(favori);
                 }                    
@@ -49,37 +50,6 @@ namespace TvProgram.Service
         }
 
         /// <summary>
-        /// Récupère l'URL dans la chaîne <A>...</A>
-        /// 
-        /// TODO améliorer l'algo (ou au moins avoir des variables plus explicites)
-        /// </summary>
-        /// <param name="ligne"></param>
-        /// <returns></returns>
-        public string GetUrl(string ligne)
-        {
-            if (ligne != null && ligne.Trim() != "")
-            {
-                var result = new StringBuilder();
-                int posHREF = ligne.IndexOf(@"HREF=""https://www.programme-tv.net/cinema/", 0);
-                int i = 1;
-                if (ligne.Substring(posHREF + 4, 1) == "=" && ligne.Substring(posHREF + 5, 1) == "\"")
-                {
-                    // Récupération de la chaîne comprise entre les double quotes
-                    while (ligne.Substring(posHREF + 5 + i, 1) != "\"")
-                    {
-                        result.Append(ligne.Substring(posHREF + 5 + i, 1));
-                        i++;
-                    }
-                }
-                return result.ToString();
-            }
-            else
-            {
-                return null;
-            }            
-        }
-
-        /// <summary>
         /// Récupère la date dans la chaîne <A>...</A>
         /// 
         /// TODO améliorer l'algo (ou au moins avoir des variables plus explicites)
@@ -88,21 +58,11 @@ namespace TvProgram.Service
         /// <returns></returns>
         public DateTime? GetDate(string ligne)
         {
-            if (ligne != null && ligne.Trim() != "")
-            {
-                var date = new StringBuilder();
-                int posADD_DATE = ligne.IndexOf(@"ADD_DATE");
-                int i = 1;
-                if (ligne.Substring(posADD_DATE + 8, 1) == "=" && ligne.Substring(posADD_DATE + 9, 1) == "\"")
-                {
-                    // Récupération de la chaîne comprise entre les double quotes
-                    while (ligne.Substring(posADD_DATE + 9 + i, 1) != "\"")
-                    {
-                        date.Append(ligne.Substring(posADD_DATE + 9 + i, 1));
-                        i++;
-                    }
-                }
-                return DateUtils.ToDateTime(date.ToString());
+            string result = GetFieldValue(ligne, "ADD_DATE");
+
+            if (result != null)
+            {                
+                return DateUtils.ToDateTime(result.ToString());
             }
             else
             {
@@ -117,22 +77,56 @@ namespace TvProgram.Service
         /// <returns></returns>
         public string GetLibelle(string ligne)
         {
+            string field = "ICON";
+
             if (ligne != null && ligne.Trim() != "")
-            {
-                int posDebutICON = ligne.IndexOf(@"ICON", 0);
+            {                
+                int posDebut = ligne.IndexOf($"{field}", 0);
+                if (posDebut == -1)
+                {
+                    field = "ADD_DATE";
+                    posDebut = ligne.IndexOf($"{field}", 0);
+                }
                 int i = 1;
-                if (ligne.Substring(posDebutICON + 4, 1) == "=" && ligne.Substring(posDebutICON + 5, 1) == "\"")
+                int fieldLength = field.Length;
+                if (ligne.Substring(posDebut + fieldLength, 1) == "=" && ligne.Substring(posDebut + fieldLength + 1, 1) == "\"")
                 {
                     // Récupération de la chaîne comprise entre les double quotes
-                    while (ligne.Substring(posDebutICON + 5 + i, 1) != "\"")
+                    while (ligne.Substring(posDebut + fieldLength + 1 + i, 1) != "\"")
                     {                        
                         i++;
                     }
                 }
-                int posFinICON = i;
+                int posFin = i;
                 int posDebutBaliseA = ligne.IndexOf(@"</A>", 0);
 
-                return ligne.Substring(posDebutICON + posFinICON + 7, posDebutBaliseA - (posDebutICON + posFinICON + 7)).Trim();
+                return ligne.Substring(posDebut + posFin + fieldLength + 3, posDebutBaliseA - (posDebut + posFin + fieldLength + 3)).Trim();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public string GetFieldValue(string entry, string field)
+        {
+            int fieldLength = field.Length;
+
+            if (entry != null && entry.Trim() != "")
+            {
+                var result = new StringBuilder();
+                int pos = entry.IndexOf($"{field}=\"", 0, StringComparison.OrdinalIgnoreCase);
+                int i = 1;
+                if (entry.Substring(pos + fieldLength, 1) == "=" && entry.Substring(pos + fieldLength + 1, 1) == "\"")
+                {
+                    // Récupération de la chaîne comprise entre les double quotes
+                    while (entry.Substring(pos + fieldLength + 1 + i, 1) != "\"")
+                    {
+                        result.Append(entry.Substring(pos + fieldLength + 1 + i, 1));
+                        i++;
+                    }
+                }
+                return result.ToString();
             }
             else
             {

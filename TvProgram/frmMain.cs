@@ -19,7 +19,7 @@ namespace TvProgram
 		/// <param name="e"></param>
 		private void btnRechercher_Click(object sender, EventArgs e)
 		{
-			TeleLoisirsService teleLoisirsService = new TeleLoisirsService();
+            TeleLoisirsService teleLoisirsService = new TeleLoisirsService();
 
 			tbSource.Text = teleLoisirsService.GetCodeSource(dateTimePicker.Value, new System.Collections.Generic.List<Entities.Chaine>());
 

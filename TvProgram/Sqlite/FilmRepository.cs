@@ -14,7 +14,7 @@ namespace TvProgram.Sqlite
         {
             try
             {
-                var connection = new SqliteConnection("Data Source=C:\\Yoann\\Projets\\YBL\\TvProgram\\TvProgram\\TvProgram.db");
+                var connection = new SqliteConnection("Data Source=C:\\Yoann\\Projets\\YBL\\TvProgram\\TvProgram\\TvProgram.db3");
                 connection.Open();
 
                 var sql = "INSERT INTO Film (url, libelle, date_favori) " +
