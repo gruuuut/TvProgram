@@ -63,8 +63,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\FileService.cs" />
-    <Compile Include="Service\TeleLoisirsService.cs" />
+    <Compile Include="Services\ApiService.cs" />
+    <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\TeleLoisirsService.cs" />
     <Compile Include="Sqlite\FilmRepository.cs" />
     <Compile Include="Utils\DateUtils.cs" />
     <Compile Include="Utils\TypeMedia.cs" />
@@ -120,6 +121,9 @@
     </PackageReference>
     <PackageReference Include="NETStandard.Library">
       <Version>1.6.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-standard">
       <Version>1.5.1</Version>
